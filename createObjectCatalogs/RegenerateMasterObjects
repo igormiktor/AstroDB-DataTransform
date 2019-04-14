@@ -1,0 +1,13 @@
+#!/bin/sh
+
+# Regenerate the main indices, catalogs, and views
+
+mysql -u astro astronomy < DropCatalogsAndMasterIndex.sql
+mysql -u astro astronomy < MasterObjectIndex.sql
+mysql -u astro astronomy < MasterObjectIndexSetUp.sql
+mysql -u astro astronomy < MakeMasterCatalogs.sql
+mysql -u astro astronomy < MakePlanetCatalog.sql
+mysql -u astro astronomy < MakeSpecialCatalog.sql
+mysql -u astro astronomy < MakeAsteroidCatalog.sql
+mysql -u astro astronomy < MakeCometCatalog.sql
+mysql -u astro astronomy < MakePrimaryViews.sql

@@ -1,0 +1,25 @@
+#!/bin/sh
+
+if [ $# = '0' ]
+then
+	echo "ERROR: Need to provide the name of an AP sqlite3 observation database" >&2
+elif [ $# = '1' ]
+then
+	if [ -f "$1" ] && [ -r "$1" ]
+	then
+		echo ".dump Sessions" | sqlite3 "$1" | sed -f convert_AP-ObsSes.sed | awk -f convert_AP-Ses.awk | mysql -u astro astronomy
+		echo ".dump Observations" | sqlite3 "$1" | sed -f convert_AP-ObsSes.sed | awk -f convert_AP-Obs.awk | mysql -u astro astronomy
+	else
+		echo "File $1 doesn't exist or is unreadable" >&2
+	fi
+elif [ $# = '2' ]
+then
+	if [ -f "$1" ] && [ -r "$1" ]
+	then
+		echo ".dump Sessions" | sqlite3 "$1" | sed -f convert_AP-ObsSes.sed | awk -f convert_AP-Ses.awk > $2
+		echo ".dump Observations" | sqlite3 "$1" | sed -f convert_AP-ObsSes.sed | awk -f convert_AP-Obs.awk >> $2
+	else
+		echo "File $1 doesn't exist or is unreadable" >&2
+	fi
+fi
+

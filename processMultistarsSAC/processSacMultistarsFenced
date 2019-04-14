@@ -1,0 +1,40 @@
+#!/bin/sh
+
+ver='0'
+while getopts ":v:" opt
+do
+	case $opt in
+		v	)	ver=$OPTARG;;
+		\?	) 	echo 'usage: processSacMultistarsFenced -v VersionNumber InFile [Outfile]'
+	esac
+done
+shift $(($OPTIND - 1))
+
+if [ $ver = '0' ]
+then
+	echo 'processSacMultistarsFenced Need to provide the version number via the -v option'
+	exit 1
+fi
+
+if [ $# = '0' ]
+then
+	sed -f prep_SAC_Multistars_Fenced.sed | awk -f prep_SAC_Multistars_Fenced.awk | mysql -u astro astronomy
+elif [ $# = '1' ]
+then
+	if [ -f $1 ] && [ -r $1 ]
+	then
+		echo "Processing file $1 directly into mysql..."
+		sed -f prep_SAC_Multistars_Fenced.sed $1 | awk -f prep_SAC_Multistars_Fenced.awk | mysql -u astro astronomy
+	else
+		echo "File $1 doesn't exist or is unreadable" >&2
+	fi
+elif [ $# = '2' ]
+then
+	if [ -f $1 ] && [ -r $1 ]
+	then
+		echo "Processing file $1 into file $2..."
+		sed -f prep_SAC_Multistars_Fenced.sed $1 | awk -f prep_SAC_Multistars_Fenced.awk >$2
+	else
+		echo "File $1 doesn't exist or is unreadable" >&2
+	fi
+fi
