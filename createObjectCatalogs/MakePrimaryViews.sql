@@ -68,6 +68,11 @@ create view CaldwellObjects as
 select * from DeepSkyObjects
 where caldwell is true;
 
+drop view if exists BestOfNGC;
+create view BestOfNGC as
+select * from DeepSkyObjects
+where bestOfNGC is true;
+
 commit;
 
 
