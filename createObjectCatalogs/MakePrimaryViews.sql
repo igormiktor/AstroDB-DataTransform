@@ -63,6 +63,11 @@ create view MessierObjects as
 select * from DeepSkyObjects
 where messier is true;
 
+drop view if exists CaldwellObjects;
+create view CaldwellObjects as
+select * from DeepSkyObjects
+where caldwell is true;
+
 commit;
 
 
@@ -108,4 +113,3 @@ drop view if exists Asteroids;
 create view Asteroids as
 select moi.name, moi.otherNames, ac.number, ac.notes, moi.objectId from MasterObjectIndex moi
 join AsteroidCatalog ac on ( moi.objectId = ac.objectId ) order by ac.number asc;
-
