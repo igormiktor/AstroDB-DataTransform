@@ -10,7 +10,8 @@ The original data sources for this database were:
 - [General Catalog of Variable Stars (GCVS) v4.1](https://heasarc.gsfc.nasa.gov/W3Browse/all/gcvs.html)
 - Planetary data from [JPL/Caltech](http://ssd.jpl.nasa.gov/)
 
-The tools here can be used to recreate the database from original sources (all the preprocessing tools are included)
+The tools here can be used to recreate the database from original sources (all the preprocessing tools are included).
+
 Note that asteroids and comets (except for a few that are pre-populated) are maintained in the database on an "as observed" basis (there is no "master" catalog for these; you have to create entries on-the-fly for the ones you observe).
 
 Igor Mikolic-Torreira
