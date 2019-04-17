@@ -73,8 +73,8 @@ create view BestOfNGC as
 select * from DeepSkyObjects
 where bestOfNGC is true;
 
-drop view if exists Hershel400;
-create view Hershel400 as
+drop view if exists Herschel400;
+create view Herschel400 as
 select * from DeepSkyObjects
 where hershel400 is true;
 
