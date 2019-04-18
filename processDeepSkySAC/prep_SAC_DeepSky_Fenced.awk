@@ -33,7 +33,7 @@ function fixCatalogs( x ) {
 	# Change Kr = Krasnogorskaja to Kra to distinguish from Kr = Kruger (from Double Star catalog)
 	sub( /Kr /, "Kra ", x )
 
-	# Change H (followed by d-dd) = Haro from H = Herschel (Hershel is followed by Roman numerals)
+	# Change H (followed by d-dd) = Haro from H = Herschel (Herschel is followed by Roman numerals)
 	if ( match( x, /H [0-9]-/ ) && !match( x, /[a-zA-Z]H [0-9]-/ ) ) {
 		# Then the next subsitution won't accidentally grab a catalog ending in H  or Herschel
 		# Two step substitution due to lack of sub-element matches
@@ -85,7 +85,7 @@ BEGIN {
 	print "	br_star			float,"
 	print "	best_of_ngc		boolean,"
 	print "	caldwell		boolean,"
-	print "	hershel			boolean,"
+	print "	herschel		boolean,"
 	print "	messier			boolean,"
 	print "	ngc_desc		varchar(64),"
 	print "	notes			varchar(96),"
@@ -192,7 +192,7 @@ END {
 	# Print the line
 	print "insert into ", tableName, " ",
 		"( name, other_name, obj_type, constellation, ra, decl, mag, surf_bright, u2k, tir, size_major, size_minor, pa, ",
-		"obj_class, nstars, br_star, best_of_ngc, caldwell, hershel, messier, ngc_desc, notes, source ) ",
+		"obj_class, nstars, br_star, best_of_ngc, caldwell, herschel, messier, ngc_desc, notes, source ) ",
 		"values ( ", name, ",", other, ",", type, ",", cons, ",", ra, ",", dec, ",",
 		mag, ",", surf_bright, ",", u2k, ",", tir, ",", sizeMax, ",", sizeMin, ",", pa, ",", objClass, ",", nStars, ",",
 		brStar, ",", best, ",", caldwell, ",", herschel, ",", messier, ",", ngcDesc, ",", notes, ",", source, " );"

@@ -6,7 +6,7 @@ drop view if exists DeepSkyObjects;
 create view DeepSkyObjects as
 select moi.name, moi.otherNames, ot.description, ds.constellation, ds.rightAscension, ds.declination, ds.magnitude,
 ds.surfBright, ds.sizeMajor, ds.sizeMinor, ds.posAngle, ds.classification, ds.nbrStars, ds.brightestStar,
-ds.pageU2K, ds.pageSA2K, ds.pagePSA, ds.pageBSA, ds.messier, ds.bestOfNGC, ds.caldwell, ds.hershel400, ds.ngcDesc,
+ds.pageU2K, ds.pageSA2K, ds.pagePSA, ds.pageBSA, ds.messier, ds.bestOfNGC, ds.caldwell, ds.herschel400, ds.ngcDesc,
 ds.notes, ot.kind, ot.category, moi.objectId
 from MasterObjectIndex moi
 join DeepSkyCatalog ds on ( moi.objectId = ds.objectId )
@@ -76,7 +76,7 @@ where bestOfNGC is true;
 drop view if exists Herschel400;
 create view Herschel400 as
 select * from DeepSkyObjects
-where hershel400 is true;
+where herschel400 is true;
 
 commit;
 

@@ -70,7 +70,7 @@ create table AstroObjects
 	br_star				float,
 	best_of_ngc			boolean,
 	caldwell			boolean,
-	hershel				boolean,
+	herschel			boolean,
 	messier				boolean,
 	ngc_desc			varchar(64),
 	notes				varchar(96),
