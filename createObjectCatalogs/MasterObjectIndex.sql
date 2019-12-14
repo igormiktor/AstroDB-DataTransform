@@ -17,7 +17,7 @@ create table ObjectTypes
 
 insert into ObjectTypes values
 ( 1,  'Asterism', 'Star', 'Stellar', true ),
-( 11, 'Star', 'Stellar', 'Star', true ),
+( 11, 'Star', 'Star', 'Stellar', true ),
 
 ( 101, 'Globular Cluster', 'Star Cluster', 'DeepSky', true ),
 ( 102, 'Open Cluster', 'Star Cluster', 'DeepSky', true ),
@@ -148,4 +148,3 @@ begin
 end; //
 delimiter ;
 commit;
-
