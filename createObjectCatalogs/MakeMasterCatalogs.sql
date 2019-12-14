@@ -26,7 +26,7 @@ create table DeepSkyCatalog
 	messier						boolean,
 	bestOfNGC					boolean,
 	caldwell					boolean,
-	hershel400					boolean,
+	herschel400					boolean,
 	ngcDesc						varchar(64),
 	notes						varchar(255),
 	dataSource					varchar(32),
@@ -40,10 +40,10 @@ create table DeepSkyCatalog
 
 insert into DeepSkyCatalog
 ( objectId, name, constellation, rightAscension, declination, magnitude, surfBright, sizeMajor, sizeMinor, posAngle, classification,
-nbrStars, brightestStar, pageU2K, pageSA2K, bestOfNGC, caldwell, hershel400, messier, ngcDesc, notes, dataSource )
+nbrStars, brightestStar, pageU2K, pageSA2K, bestOfNGC, caldwell, herschel400, messier, ngcDesc, notes, dataSource )
 select
 moi.objectId, moi.name, con.abbreviationIAU, ds.ra, ds.decl, ds.mag, ds.surf_bright, ds.size_major, ds.size_minor,
-ds.pa, ds.obj_class, ds.nstars, ds.br_star, ds.u2k, ds.tir, ds.best_of_ngc, ds.caldwell, ds.hershel, ds.messier,
+ds.pa, ds.obj_class, ds.nstars, ds.br_star, ds.u2k, ds.tir, ds.best_of_ngc, ds.caldwell, ds.herschel, ds.messier,
 ds.ngc_desc, ds.notes, ds.source
 from SAC_DeepSky_2011_04_22 ds, MasterObjectIndex moi, Constellations con
 where moi.name = ds.name and ds.constellation = con.abbreviationSAC;
