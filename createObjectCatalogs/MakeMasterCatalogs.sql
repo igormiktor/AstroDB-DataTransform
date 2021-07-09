@@ -1,7 +1,19 @@
 
 -- This is the master catalog of Deep Sky objects
 
+-- THE INSERT JOIN BELOW ORIGINALLY PRODUCED 1 DUPE: where moi.objectId = 5280
+-- (delete the one with deepSkyId = 5280 [NGC 2905])
+-- This is fixed in the production database by patching the database at the very end (see
+-- maintainDatabase/fixDeepSkyCatalog)
+-- But if ever need to regenerate, now fixed by ignoring the SAC_DeepSky_2011_04_22 duplicate
+-- in the insert join below that populates DeepSkyCatalog.
+
+-- Note that all observations and other tables link to objectId (with links to the MasterObjectIndex);
+-- Nothing ever links to deepSkyId, which is simply the DeepSkyCatalog's primary key.
+
+
 start transaction;
+
 drop table if exists DeepSkyCatalog;
 create table DeepSkyCatalog
 (
@@ -33,9 +45,9 @@ create table DeepSkyCatalog
 	lastTouched					timestamp default current_timestamp on update current_timestamp,
 
 	primary key ( deepSkyId ),
+	unique key (objectId ),
 	key ( name ),
-	foreign key ( objectId ) references MasterObjectIndex ( objectId ),
-	foreign key ( constellation ) references Constellations ( abbreviationIAU )
+	foreign key ( objectId ) references MasterObjectIndex ( objectId )
 );
 
 insert into DeepSkyCatalog
@@ -46,7 +58,7 @@ moi.objectId, moi.name, con.abbreviationIAU, ds.ra, ds.decl, ds.mag, ds.surf_bri
 ds.pa, ds.obj_class, ds.nstars, ds.br_star, ds.u2k, ds.tir, ds.best_of_ngc, ds.caldwell, ds.herschel, ds.messier,
 ds.ngc_desc, ds.notes, ds.source
 from SAC_DeepSky_2011_04_22 ds, MasterObjectIndex moi, Constellations con
-where moi.name = ds.name and ds.constellation = con.abbreviationSAC;
+where moi.name = ds.name and ds.constellation = con.abbreviationSAC and ds.i <> 5280;
 commit;
 
 
@@ -94,7 +106,9 @@ where moi.name = ms.name and ms.constellation = con.abbreviationSAC;
 commit;
 
 
-start transaction;
+-- There is a duplicate in the original ColoredStarCatalog (coming from SAC_RedStar_2011_04_22).
+-- We fix this by ignoring SAC_RedStar_2011_04_22 with id = 296 when we insert into the new table.
+
 start transaction;
 drop table if exists ColoredStarCatalog;
 create table ColoredStarCatalog
@@ -119,9 +133,9 @@ create table ColoredStarCatalog
 	lastTouched					timestamp default current_timestamp on update current_timestamp,
 
 	primary key ( coloredStarId ),
+    unique key ( objectId ),
 	key ( name ),
-	foreign key ( objectId ) references MasterObjectIndex ( objectId ),
-	foreign key ( constellation ) references Constellations ( abbreviationIAU )
+	foreign key ( objectId ) references MasterObjectIndex ( objectId )
 );
 
 insert into ColoredStarCatalog
@@ -131,7 +145,8 @@ select
 moi.objectId, moi.name, con.abbreviationIAU, cs.ra, cs.decl, cs.mag, cs.b_v, cs.spectral,
 cs.multiple, cs.variable, cs.notes, cs.source
 from SAC_RedStar_2011_04_22 cs, MasterObjectIndex moi, Constellations con
-where moi.name = cs.name and cs.constellation = con.abbreviationSAC;
+where moi.name = cs.name and cs.constellation = con.abbreviationSAC
+    and cs.id <> 296;
 commit;
 
 

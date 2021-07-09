@@ -55,10 +55,10 @@ create table SpecialCatalog
 	lastTouched					timestamp default current_timestamp on update current_timestamp,
 
 	primary key ( specialId ),
+    unique key( objectId ),
 	unique key ( name ),
 	foreign key ( objectId ) references MasterObjectIndex ( objectId ),
-	foreign key ( objectType ) references ObjectTypes ( typeId ),
-	foreign key ( constellation ) references Constellations ( abbreviationIAU )
+	foreign key ( objectType ) references ObjectTypes ( typeId )
 );
 
 insert into SpecialCatalog

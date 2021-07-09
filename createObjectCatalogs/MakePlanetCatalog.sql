@@ -80,6 +80,7 @@ create table PlanetCatalog
 	lastTouched					timestamp default current_timestamp on update current_timestamp,
 
 	primary key ( planetId ),
+    unique key( objectId ),
 	unique key ( name ),
 	foreign key ( objectId ) references MasterObjectIndex ( objectId )
 );
@@ -97,6 +98,3 @@ where moi.name = pt.name;
 drop table if exists PlanetsTemp;
 
 commit;
-
-
-

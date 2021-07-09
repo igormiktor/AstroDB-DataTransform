@@ -61,6 +61,7 @@ create table AsteroidCatalog
 	lastTouched					timestamp default current_timestamp on update current_timestamp,
 
 	primary key ( asteroidId ),
+    unique key( objectId ),
 	unique key ( name ),
 	unique key ( number ),
 	foreign key ( objectId ) references MasterObjectIndex ( objectId )

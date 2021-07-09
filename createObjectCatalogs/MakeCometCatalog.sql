@@ -44,6 +44,7 @@ create table CometCatalog
 	lastTouched					timestamp default current_timestamp on update current_timestamp,
 
 	primary key ( cometId ),
+    unique key( objectId ),
 	unique key ( designation ),
 	key ( name ),
 	foreign key ( objectId ) references MasterObjectIndex ( objectId )
