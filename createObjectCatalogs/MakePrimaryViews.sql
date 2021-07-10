@@ -85,11 +85,21 @@ start transaction;
 
 drop view if exists MultipleStars;
 create view MultipleStars as
-select moi.name, moi.sao, moi.otherNames, ms.constellation, ms.rightAscension, ms.declination, ms.components,
-ms.magnitude, ms.magnitude2, ms.separation, ms.posAngle, ms.variable, ms.pageU2K, ms.pageSA2K, ms.pagePSA, ms.pageBSA,
-ms.notes, moi.objectId
+select moi.name, moi.sao, moi.otherNames, mps.constellation, mps.rightAscension, mps.declination,
+mps.magnitudePri, mps.variable, mps.pageU2K, mps.pageSA2K, mps.pagePSA, mps.pageBSA,
+mps.notes, moi.objectId
 from MasterObjectIndex moi
-join MultipleStarCatalog ms on ( moi.objectId = ms.objectId );
+inner join MultipleStarPrimaryCatalog mps on ( moi.objectId = mps.objectId );
+
+drop view if exists MultipleStarDetails;
+create view MultipleStarDetails as
+select moi.name, moi.sao, moi.otherNames, p.constellation, p.rightAscension, p.declination,
+p.magnitudePri, s.magnitudeSec, s.components, s.separation, s.posAngle, s.variable,
+p.pageU2K, p.pageSA2K, p.pagePSA, p.pageBSA, s.notes, moi.objectId
+from MasterObjectIndex moi
+inner join MultipleStarPrimaryCatalog p  on ( moi.objectId = p.objectId )
+inner join MultipleStarSecondaries s on ( p.objectId = s.objectId )
+order by p.rightAscension, moi.objectId, s.components;
 
 commit;
 
